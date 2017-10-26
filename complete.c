@@ -1,6 +1,6 @@
 /* complete.c, Atto Emacs, Hugh Barney, Public Domain, 2016 */
 
-#include "header.h"
+#include "atto.h"
 
 /* basic filename completion, based on code in uemacs/PK */
 int getfilename(char *prompt, char *buf, int nbuf)

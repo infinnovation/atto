@@ -1,6 +1,6 @@
 /* hlite.c, generic syntax hilighting, Atto Emacs, Hugh Barney, Public Domain, 2016 */
 
-#include "header.h"
+#include "atto.h"
 
 int state = ID_DEFAULT;
 int next_state = ID_DEFAULT;

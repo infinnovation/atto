@@ -1,6 +1,6 @@
 /* search.c, Atto Emacs, Public Domain, Hugh Barney, 2016, Derived from: Anthony's Editor January 93 */
 
-#include "header.h"
+#include "atto.h"
 
 #define FWD_SEARCH 1
 #define REV_SEARCH 2

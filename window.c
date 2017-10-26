@@ -1,6 +1,6 @@
 /* window.c, Atto Emacs, Hugh Barney, Public Domain, 2015 */
 
-#include "header.h"
+#include "atto.h"
 
 int win_cnt = 0;
 

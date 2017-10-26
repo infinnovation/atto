@@ -1,6 +1,8 @@
 /* display.c, Atto Emacs, Public Domain, Hugh Barney, 2016, Derived from: Anthony's Editor January 93 */
 
-#include "header.h"
+#define _XOPEN_SOURCE
+#include "atto.h"
+#include <wchar.h>
 
 /* Reverse scan for start of logical line containing offset */
 point_t lnstart(buffer_t *bp, register point_t off)

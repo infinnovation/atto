@@ -1,7 +1,7 @@
 /* gap.c, Atto Emacs, Public Domain, Hugh Barney, 2016, Derived from: Anthony's Editor January 93 */
 
 #include <sys/stat.h>
-#include "header.h"
+#include "atto.h"
 
 /* Enlarge gap by n chars, position of gap cannot change */
 int growgap(buffer_t *bp, point_t n)

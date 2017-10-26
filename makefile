@@ -24,37 +24,37 @@ OBJ     = command$(O) display$(O) gap$(O) key$(O) search$(O) buffer$(O) replace$
 atto$(E) : $(OBJ)
 	$(LD) -o atto$(E) $(OBJ) $(LIBS)
 
-command$(O): command.c header.h
+command$(O): command.c atto.h
 	$(CC) $(CFLAGS) -c command.c
 
-complete$(O): complete.c header.h
+complete$(O): complete.c atto.h
 	$(CC) $(CFLAGS) -c complete.c
 
-display$(O): display.c header.h
+display$(O): display.c atto.h
 	$(CC) $(CFLAGS) -c display.c
 
-gap$(O): gap.c header.h
+gap$(O): gap.c atto.h
 	$(CC) $(CFLAGS) -c gap.c
 
-key$(O): key.c header.h
+key$(O): key.c atto.h
 	$(CC) $(CFLAGS) -c key.c
 
-search$(O): search.c header.h
+search$(O): search.c atto.h
 	$(CC) $(CFLAGS) -c search.c
 
-replace$(O): replace.c header.h
+replace$(O): replace.c atto.h
 	$(CC) $(CFLAGS) -c replace.c
 
-window$(O): window.c header.h
+window$(O): window.c atto.h
 	$(CC) $(CFLAGS) -c window.c
 
-buffer$(O): buffer.c header.h
+buffer$(O): buffer.c atto.h
 	$(CC) $(CFLAGS) -c buffer.c
 
-hilite$(O): hilite.c header.h
+hilite$(O): hilite.c atto.h
 	$(CC) $(CFLAGS) -c hilite.c
 
-main$(O): main.c header.h
+main$(O): main.c atto.h
 	$(CC) $(CFLAGS) -c main.c
 
 clean:
