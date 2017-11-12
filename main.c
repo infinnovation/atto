@@ -1,6 +1,7 @@
 /* main.c, Atto Emacs, Public Domain, Hugh Barney, 2016, Derived from: Anthony's Editor January 93 */
 
 #include "atto.h"
+#include <setjmp.h>
 
 int done;
 point_t nscrap;
@@ -19,10 +20,22 @@ buffer_t *curbp;			/* current buffer */
 buffer_t *bheadp;			/* head of list of buffers */
 window_t *curwp;
 window_t *wheadp;
+static jmp_buf jmp;
+static const char *fatal_msg = NULL;
 
-int main(int argc, char **argv)
+int atto_run(char *filename)
 {
-	setlocale(LC_ALL, "") ; /* required for 3,4 byte UTF8 chars */
+	if (setjmp(jmp)) {
+		if (curscr != NULL) {
+			move(LINES-1, 0);
+			refresh();
+			noraw();
+			endwin();
+			putchar('\n');
+		}
+		fprintf(stderr, fatal_msg, PROG_NAME);
+		return -1;
+	}
 	if (initscr() == NULL) fatal("%s: Failed to initialize the screen.\n");
 	raw();
 	noecho();
@@ -38,11 +51,11 @@ int main(int argc, char **argv)
 	init_pair(ID_SINGLE_STRING, COLOR_YELLOW, COLOR_BLACK);  /* single quoted strings */
 	init_pair(ID_DOUBLE_STRING, COLOR_YELLOW, COLOR_BLACK);  /* double quoted strings */
 	
-	if (1 < argc) {
-		curbp = find_buffer(argv[1], TRUE);
-		(void) insert_file(argv[1], FALSE);
+	if (filename) {
+		curbp = find_buffer(filename, TRUE);
+		(void) insert_file(filename, FALSE);
 		/* Save filename irregardless of load() success. */
-		strncpy(curbp->b_fname, argv[1], NAME_MAX);
+		strncpy(curbp->b_fname, filename, NAME_MAX);
 		curbp->b_fname[NAME_MAX] = '\0'; /* force truncation */
 	} else {
 		curbp = find_buffer("*scratch*", TRUE);
@@ -83,15 +96,8 @@ int main(int argc, char **argv)
 
 void fatal(char *msg)
 {
-	if (curscr != NULL) {
-		move(LINES-1, 0);
-		refresh();
-		noraw();
-		endwin();
-		putchar('\n');
-	}
-	fprintf(stderr, msg, PROG_NAME);
-	exit(1);
+	fatal_msg = msg;
+	longjmp(jmp, 1);
 }
 
 void msg(char *msg, ...)
@@ -102,3 +108,11 @@ void msg(char *msg, ...)
 	va_end(args);
 	msgflag = TRUE;
 }
+
+#if ! ATTO_NO_MAIN
+int main(int argc, char **argv)
+{
+	setlocale(LC_ALL, "") ; /* required for 3,4 byte UTF8 chars */
+	return atto_run(argc > 1 ? argv[1] : NULL);
+}
+#endif
