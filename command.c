@@ -179,7 +179,7 @@ void gotoline()
 
 void insertfile()
 {
-	if (getfilename("Insert file: ", temp, NAME_MAX))
+	if (getfilename("Insert file: ", temp, ATTO_FNAME_MAX))
 		(void)insert_file(temp, TRUE);
 }
 
@@ -188,8 +188,8 @@ void readfile()
 	buffer_t *bp;
 	
 	temp[0] = '\0';
-	int result = getfilename("Find file: ", (char*)temp, NAME_MAX);
-	/* int result = getinput("Find file: ", (char*)temp, NAME_MAX, F_CLEAR); */
+	int result = getfilename("Find file: ", (char*)temp, ATTO_FNAME_MAX);
+	/* int result = getinput("Find file: ", (char*)temp, ATTO_FNAME_MAX, F_CLEAR); */
 
 	if (result) {
 		bp = find_buffer(temp, TRUE);
@@ -202,8 +202,8 @@ void readfile()
 			if (!load_file(temp)) {
 				msg("New file %s", temp);
 			}
-			strncpy(curbp->b_fname, temp, NAME_MAX);
-			curbp->b_fname[NAME_MAX] = '\0'; /* truncate if required */
+			strncpy(curbp->b_fname, temp, ATTO_FNAME_MAX);
+			curbp->b_fname[ATTO_FNAME_MAX] = '\0'; /* truncate if required */
 		}
 	}
 }
@@ -221,10 +221,10 @@ void savebuffer()
 
 void writefile()
 {
-	strncpy(temp, curbp->b_fname, NAME_MAX);
-	if (getinput("Write file: ", temp, NAME_MAX, F_NONE))
+	strncpy(temp, curbp->b_fname, ATTO_FNAME_MAX);
+	if (getinput("Write file: ", temp, ATTO_FNAME_MAX, F_NONE))
 		if (save(temp) == TRUE)
-			strncpy(curbp->b_fname, temp, NAME_MAX);
+			strncpy(curbp->b_fname, temp, ATTO_FNAME_MAX);
 }
 
 void killbuffer()

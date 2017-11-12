@@ -55,8 +55,8 @@ int atto_run(char *filename)
 		curbp = find_buffer(filename, TRUE);
 		(void) insert_file(filename, FALSE);
 		/* Save filename irregardless of load() success. */
-		strncpy(curbp->b_fname, filename, NAME_MAX);
-		curbp->b_fname[NAME_MAX] = '\0'; /* force truncation */
+		strncpy(curbp->b_fname, filename, ATTO_FNAME_MAX);
+		curbp->b_fname[ATTO_FNAME_MAX] = '\0'; /* force truncation */
 	} else {
 		curbp = find_buffer("*scratch*", TRUE);
 		strncpy(curbp->b_bname, "*scratch*", STRBUF_S);

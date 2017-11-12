@@ -15,6 +15,10 @@
 #include <wchar.h>
 int mkstemp(char *);
 
+#ifndef ATTO_FNAME_MAX
+#define ATTO_FNAME_MAX NAME_MAX
+#endif
+
 /* Define external names to avoid clashes when linked as a library */
 #define curbp atto_curbp
 #define bheadp atto_bheadp
@@ -175,7 +179,7 @@ typedef struct buffer_t
 	char_t *b_egap;           /* end of gap */
 	int b_row;                /* cursor row */
 	int b_col;                /* cursor col */
-	char b_fname[NAME_MAX + 1]; /* filename */
+	char b_fname[ATTO_FNAME_MAX + 1]; /* filename */
 	char b_bname[STRBUF_S];   /* buffer name */
 	char b_flags;             /* buffer flags */
 } buffer_t;
